@@ -69,28 +69,28 @@ Built this in 2014 for my Bachelor's thesis in Computer Science
 ##Screenshots
 ###Admin send invite 
 ![Admin invite](readme-images/screnshots/send-invite.JPG?raw=true "Admin invite")
-</br>
+</br></br>
 ###Email invite
 ![Email invite](readme-images/screnshots/email-invite.JPG?raw=true "Email invite")
-</br>
+</br></br>
 ###User registration 
 ![User registration](readme-images/screnshots/user-registration.JPG?raw=true "User registration")
-</br>
+</br></br>
 ###Team member Dashboard
 ![Team member Dashboard](readme-images/screnshots/user-dashboard.JPG?raw=true "Team member Dashboard")
-</br>
+</br></br>
 ###Product Owner Dashboard
-![Product Owner Dashboard](readme-images/screnshots/po-dashboard?raw=true "Product Owner Dashboard")
-</br>
+![Product Owner Dashboard](readme-images/screnshots/po-dashboard.JPG?raw=true "Product Owner Dashboard")
+</br></br>
 ###Backlog
 ![Backlog](readme-images/screnshots/backlog-with-epics.JPG?raw=true "Backlog")
-</br>
+</br></br>
 ###Sprint view
 ![Sprint view](readme-images/screnshots/sprint-view.JPG?raw=true "Sprint view")
-</br>
+</br></br>
 ###View task details
 ![View task details](readme-images/screnshots/task-details.JPG?raw=true "View task details")
-</br>
+</br></br>
 ###Create new task
 ![Create new task](readme-images/screnshots/add-new-task.JPG?raw=true "Create new task")
-</br>
+</br></br>
