@@ -1,0 +1,38 @@
+﻿@model AgileManager.Web.Models.DashboardModel
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+@if (Session["UserType"].ToString() == "None" || Session["UserType"].ToString() == "TeamMember" || Session["UserType"].ToString() == "TeamLeader")
+{
+    <div class="row">
+        <div class="col-lg-6">
+            @Html.Partial("Partials/_AssignedTasksWorkModel", Model.AssignedTaskWorkModelCollection)
+        </div>
+        <div class="col-lg-6">
+            @Html.Partial("Partials/_SprintTasksPieChart")
+        </div>
+    </div>
+}
+
+@if (Session["UserType"].ToString() == "ProductOwner")
+{
+    <div class="row">
+        <div class="col-lg-6">
+            @Html.Partial("Partials/_SprintTasksPieChart")
+        </div>
+        <div class="col-lg-6">
+            @Html.Partial("Partials/_LastSprintsVelocityChart")
+        </div>
+    </div>
+}
+
+@if (Session["UserType"].ToString() == "Admin")
+{
+    <div class="row">
+        <div class="col-lg-6">
+            @Html.Partial("Partials/_AdminEntitiesChart")
+        </div>
+    </div>
+}

@@ -1,0 +1,67 @@
+﻿
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Current Sprint Task Status
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <h3 id="errorData" style="display:none; text-align:center">No tasks defined in current sprint !</h3>
+        <div class="flot-chart">
+            <div class="flot-chart-content" id="flot-pie-chart" style="padding: 0px; position: relative;">              
+            </div>
+        </div>
+    </div>
+    <!-- /.panel-body -->
+</div>
+
+<script src="~/Scripts/plugins/flot/jquery.flot.js"></script>
+<script src="~/Scripts/plugins/flot/jquery.flot.pie.js"></script>
+<script src="~/Scripts/plugins/flot/jquery.flot.resize.js"></script>
+<script src="~/Scripts/plugins/flot/jquery.flot.tooltip.min.js"></script>
+
+<script type="text/javascript">
+
+    //Flot Pie Chart
+    $(function () {
+
+        $.ajax({
+            url: "../api/sprint/",
+            data: {
+                id : @ViewBag.productId
+                },
+            success: function (data) {
+
+                if(data == null)
+                {
+                    $('#errorData').show();
+                    return;
+                }
+
+                var plotObj = $.plot($("#flot-pie-chart"), data, {
+                    series: {
+                        pie: {
+                            show: true
+                        }
+                    },
+                    grid: {
+                        hoverable: true
+                    },
+                    tooltip: true,
+                    tooltipOpts: {
+                        content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+                        shifts: {
+                            x: 20,
+                            y: 0
+                        },
+                        defaultTheme: false
+                    }
+                });
+            },
+            error: function () {
+                $("#flot-pie-chart").append("<h2>Error retrieving data !</h2>")
+            }
+        });        
+
+    });
+
+</script>

@@ -1,0 +1,40 @@
+﻿@model DomainClasses.Team
+
+@{
+    ViewBag.Title = "Set team leader";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <h2>@Model.Name</h2>
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Current team leader</label>
+            <div class="col-md-10">
+                <label class="control-label">@(Model.TeamLeader != null ? Model.TeamLeader.Email : "No team leader set.")</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Select team leader", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.TeamLeader.Id, new SelectList(Model.Members.Select(x => new { x.Id, x.Email }).ToList(), "Id", "Email"), new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

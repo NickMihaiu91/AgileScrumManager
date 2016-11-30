@@ -1,0 +1,40 @@
+﻿@model IEnumerable<AgileManager.Web.Models._AssignedTasksWorkModel>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Assigned tasks
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TaskName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WorkedHours)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TaskName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkedHours)
+                    </td>
+                    <td>
+                        @Html.ActionLink("View", "Details", "Task", new { id = item.TaskId }, new { })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <!-- /.panel-body -->
+</div>
+
+

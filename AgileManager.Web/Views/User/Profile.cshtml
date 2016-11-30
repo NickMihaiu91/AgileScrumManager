@@ -1,0 +1,55 @@
+﻿@model DomainClasses.User
+
+@{
+    ViewBag.Title = "User Profile";
+}
+
+<div>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lastname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lastname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Team)
+        </dt>
+
+        <dd>
+            @( Model.Team != null ? Model.Team.Name : "Not assigned to a team" )
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Change Password", "ChangePassword", new { id = Model.Id }) 
+</p>

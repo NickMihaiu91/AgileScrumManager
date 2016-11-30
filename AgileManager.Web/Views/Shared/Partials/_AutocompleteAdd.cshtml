@@ -1,0 +1,109 @@
+﻿@model AgileManager.Web.Models._AutocompleteModel
+
+<link href="~/Scripts/plugins/jquery-ui-1.11.0.custom/jquery-ui.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/jquery-ui-1.11.0.custom/jquery-ui.js"></script>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">@Model.AssignPanelHeader</h3>
+            </div>
+            <div class="panel-body">
+                <input id="autocomplete" class="form-control" style="margin-bottom: 10px">
+                <input type="button" id="btnAssign" value="Assign" class="btn btn-default" />
+                <label id="lblError" style="display:none" class="field-validation-error">Error: Could not assign !</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">@Model.AssigneesPanelHeader</h3>
+            </div>
+            <div id="itemsPanelBody" class="panel-body">
+                @foreach (var item in Model.ExistingItems)
+                {
+                    <p>@item<a class="unassign"><i class="fa fa-fw fa-12 fa-times-circle field-validation-error"></i></a></p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#autocomplete").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "@Model.UrlAutocomplete",
+                    data: {
+                        input: request.term,
+                        @*id: "@Model.ProductId"*@
+                    },
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1        
+        });
+
+        $("#btnAssign").on("click", function () {
+
+            $.ajax({
+                url: "@Model.UrlAdd",
+                data: {
+                    name: $("#autocomplete").val(),
+                    @*id: "@Model.ProductId"*@
+                },
+                success: function () {
+                    $("#lblError").hide();
+                    AddToPanel();
+                },
+                error: function () {
+                    $("#lblError").show();
+                }
+            });
+        });
+
+        
+    });
+
+    function AddToPanel()
+    {
+        var $newItem = $("<p class='new' />").append($("#autocomplete").val());
+        $newItem.append('<a class="unassign"><i class="fa fa-fw fa-12 fa-times-circle field-validation-error"></i></a>');
+
+        $("#itemsPanelBody").append($newItem);
+        $newItem.focus();
+        $newItem.removeClass('new');
+
+        //empty autocomplete field
+        $("#autocomplete").val("");
+    }
+
+    $(document).on('click', 'a.unassign', function () {
+        
+        var name = $(this).parent().text();
+
+        if (window.confirm("Are you sure you want to unassign it ?")) {
+
+            var that = this;
+
+            $.ajax({
+                url: "@Model.UrlDelete", //"/api/Product/",
+                type: "POST",
+                data: "=" + name,
+                success: function () {
+                    $(that).parent().remove();
+                },
+                error: function () {
+
+                }
+            });
+        }
+    });
+
+</script>

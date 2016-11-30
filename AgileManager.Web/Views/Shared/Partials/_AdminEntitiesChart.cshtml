@@ -1,0 +1,39 @@
+﻿
+
+<link href="~/Content/morris/morris-0.4.3.min.css" rel="stylesheet" />
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Entities ratio
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <div id="morris-donut-chart" style="position: relative;">
+
+        </div>
+    </div>
+    <!-- /.panel-body -->
+</div>
+
+<script src="~/Scripts/plugins/morris/morris.js"></script>
+<script src="~/Scripts/plugins/morris/raphael-2.1.0.min.js"></script>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $.ajax({
+            url: "../api/admin/",
+            success: function (data) {
+                Morris.Donut({
+                    element: 'morris-donut-chart',
+                    data: data,
+                    resize: true
+                });
+            }
+        });
+
+    });
+
+</script>

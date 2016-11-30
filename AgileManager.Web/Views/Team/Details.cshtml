@@ -1,0 +1,9 @@
+﻿@model AgileManager.Web.Models.TeamModel
+
+@{
+    ViewBag.Title = "Team details";
+}
+
+<h2>@Model.Team.Name</h2>
+
+@Html.Partial("Partials/_AutocompleteAdd", @Model.AutocompleteModel)

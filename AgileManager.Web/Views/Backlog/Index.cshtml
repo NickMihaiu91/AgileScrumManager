@@ -1,0 +1,192 @@
+﻿@model AgileManager.Web.Models.BacklogModel
+@{
+    ViewBag.Title = "Backlog";
+}
+
+
+@if (Model.Epics != null && Model.Epics.Count > 0)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Epics</h4>
+            @foreach (var epic in Model.Epics)
+            {
+                <button class="btn btn-default btn-@epic.ColorAdnotation"> @epic.Name</button>
+            }
+        </div>
+    </div>
+    <br />
+    <br />
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Backlog Tasks
+                <a href="~/Task/Create" style="float:right; color:white"><i class="fa fa-plus fa-fw"></i>Add new task</a>
+            </div>
+            <!-- .panel-heading -->
+            <div class="panel-body">
+                <div class="panel-group" id="accordion" name="backlog" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                    @foreach (var item in Model.BacklogItems)
+                    {
+                        <div class="panel panel-default @(item.Epic != null ? "panel-" + item.Epic.ColorAdnotation : "")" draggable="true" ondragstart="drag(event)" id="@item.Id">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    @switch (item.TaskType)
+                                    {
+                                        case DomainClasses.Enums.TaskType.Bug:
+                                            <i class="fa fa-bug fa-fw" title="Bug"></i>
+                                            break;
+                                        case DomainClasses.Enums.TaskType.Improvement:
+                                        <i class="fa fa-wrench fa-fw" title="Improvement"></i>
+                                            break;
+                                        case DomainClasses.Enums.TaskType.Story:
+                                        <i class="fa fa-book fa-fw" title="Story"></i>
+                                            break;
+                                    }
+                                    <a data-toggle="collapse" data-target="#div_@item.Id" href="#">@item.Title</a>
+                                </h4>
+
+                            </div>
+                            <div id="div_@item.Id" class="panel-collapse collapse">
+                                <div class="panel-body">
+
+                                    <a href="~/Task/Details/@item.Id" style="float:right"><i class="fa fa-edit fa-fw"></i>View task</a>
+                                    <label>Asignee</label>
+                                    <p>@(item.Assignee != null ? item.Assignee.FullName : "Not asigned")</p>
+                                    <label>Status</label>
+                                    <p>@item.TaskStatus.ToString()</p>
+                                    <label>Priority</label>
+                                    <p>@item.TaskPriority.ToString()</p>
+                                    <label>Created at</label>
+                                    <p>@item.CreatedAt.ToString()</p>
+                                    <label>Description</label>
+                                    <p>@item.Description</p>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <!-- .panel-group -->
+            </div>
+            <!-- .panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+
+
+    <!-- /.Sprint -->
+    <div class="col-md-6">
+        @if (Model.IsSprintActive)
+        {
+            <div class="panel panel-primary">
+                <div class=" panel-heading">
+                    Sprint Tasks - @Model.SprintName
+                </div>
+                <div class="panel-body">
+                    <div class="panel-group" id="accordion" name="sprintBacklog" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        @foreach (var item in Model.SprintItems)
+                        {
+                            <div class="panel panel-default" draggable="true" ondragstart="drag(event)" id="@item.Id">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        @switch (item.TaskType)
+                                        {
+                                            case DomainClasses.Enums.TaskType.Bug:
+                                                <i class="fa fa-bug fa-fw"></i>
+                                                break;
+                                            case DomainClasses.Enums.TaskType.Improvement:
+                                            <i class="fa fa-wrench fa-fw"></i>
+                                                break;
+                                            case DomainClasses.Enums.TaskType.Story:
+                                            <i class="fa fa-book fa-fw"></i>
+                                                break;
+                                        }
+                                        <a data-toggle="collapse" data-target="#div_@item.Id" href="#">@item.Title</a>
+                                    </h4>
+
+                                </div>
+                                <div id="div_@item.Id" class="panel-collapse collapse">
+                                    <div class="panel-body">
+
+                                        <a href="~/Task/Details/@item.Id" style="float:right"><i class="fa fa-edit fa-fw"></i>View task</a>
+                                        <label>Asignee</label>
+                                        <p>@(item.Assignee != null ? item.Assignee.FullName : "Not asigned")</p>
+                                        <label>Status</label>
+                                        <p>@item.TaskStatus.ToString()</p>
+                                        <label>Priority</label>
+                                        <p>@item.TaskPriority.ToString()</p>
+                                        <label>Created at</label>
+                                        <p>@item.CreatedAt.ToString()</p>
+                                        <label>Description</label>
+                                        <p>@item.Description</p>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <h4>No active sprint !</h4>
+            if (Session["UserType"].ToString() == "ProductOwner")
+            {
+                <a href="~/Sprint/Create"><i class="fa fa-plus fa-fw"></i>Create new sprint</a>
+            }
+
+        }
+
+    </div>
+</div>
+
+@if (Session["UserType"].ToString() == "ProductOwner" || Session["UserType"].ToString() == "TeamLeader")
+{
+    <script>
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("Text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("Text");
+
+            saveDragAndDropActionToServer($(ev.target).attr('name'), data);
+
+            ev.target.appendChild(document.getElementById(data));
+        }
+
+        function saveDragAndDropActionToServer(targetDiv, taskId)
+        {
+            var url;
+
+            if (targetDiv == "backlog")
+            {
+                url = "../../api/backlog";
+            }
+            else {
+                url = "../../api/sprint";
+            }
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: "=" + taskId
+            });
+        }
+
+    </script>
+}

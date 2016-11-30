@@ -1,0 +1,10 @@
+﻿@model AgileManager.Web.Models.ProductModel
+
+@{
+    ViewBag.Title = "Product details";
+}
+
+<h2>@Model.Product.Name</h2>
+
+@Html.Partial("Partials/_AutocompleteAdd", @Model.AutocompleteModel)
+

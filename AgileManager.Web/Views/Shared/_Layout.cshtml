@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Agile Scrum Manager</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/sb-admin.js")
+    @Scripts.Render("~/Scripts/plugins/metisMenu/jquery.metisMenu.js")
+</head>
+<body>
+    @if (Request.IsAuthenticated && Session["UserType"] != null)
+    {
+        <div id="wrapper">
+
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="~/Dashboard/Index">Agile Scrum Project Manager</a>
+                </div>
+                <!-- /.navbar-header -->
+
+                <ul class="nav navbar-top-links navbar-right">
+                    <!-- /.dropdown -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="~/User/Profile/@Session["UserId"]"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="~/Login/Logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            </li>
+                        </ul>
+                        <!-- /.dropdown-user -->
+                    </li>
+                    <!-- /.dropdown -->
+                </ul>
+                <!-- /.navbar-top-links -->
+
+                <div class="navbar-default navbar-static-side" role="navigation">
+                    <div class="sidebar-collapse">
+                        <ul class="nav" id="side-menu">
+
+                            @if (Session["UserType"].ToString() == "Admin")
+                            {
+
+                                @* Admin menu items *@
+                                <li>
+                                    <a href="~/Dashboard/Index"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Add entities<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="~/Product/Create">Add products</a>
+                                        </li>
+                                        <li>
+                                            <a href="~/Team/Create">Add teams</a>
+                                        </li>
+                                        <li>
+                                            <a href="~/Admin/SendInvite">Add users</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="forms.html"><i class="fa fa-folder fa-fw"></i> Manage entities<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="~/Product">Manage products</a>
+                                        </li>
+                                        <li>
+                                            <a href="~/Team">Manage teams</a>
+                                        </li>
+                                        <li>
+                                            <a href="~/User">Manage users</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="~/EmailServer/Add"><i class="fa fa-cogs fa-fw"></i> Configure e-mail server</a>
+                                </li>
+                            }
+                            else
+                            {
+
+                                @*Team menu items*@
+                                <li>
+                                    <a href="~/Dashboard/Index"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="~/Backlog/Index"><i class="fa fa-tasks fa-fw"></i> Backlog</a>
+                                </li>
+                                <li>
+                                    <a href="~/Sprint/Index"><i class="fa fa-exchange fa-fw"></i> Sprint backlog</a>
+                                </li>
+                                <li>
+                                    <a href="~/Search/TaskSearch"><i class="fa fa-search fa-fw"></i> Search </a>
+                                </li>
+                            }
+                        </ul>
+                        <!-- /#side-menu -->
+                    </div>
+                    <!-- /.sidebar-collapse -->
+                </div>
+                <!-- /.navbar-static-side -->
+            </nav>
+
+            <div id="page-wrapper">
+                <div class="row">
+                    <div class="col-lg-12">
+                        @if (ViewBag.Title != "")
+                        {
+                            <h1 class="page-header">@ViewBag.Title</h1>
+                        }
+                        @RenderBody()
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /#page-wrapper -->
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Agile Scrum Manager</p>
+            </footer>
+        </div>
+
+        @RenderSection("scripts", required: false)
+    }
+    else
+    {
+        Response.Redirect(Url.Action("Index", "Login"));
+    }
+</body>
+
+</html>

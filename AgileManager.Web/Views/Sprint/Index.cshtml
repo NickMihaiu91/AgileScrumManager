@@ -1,0 +1,109 @@
+﻿@model AgileManager.Web.Models.SprintModel
+@{
+    ViewBag.Title = "Sprint backlog";
+}
+
+<div class="row">
+    @if (Model.IsSprintActive)
+    {
+        <div class="col-md-3 task-container">
+            <h4> TODO </h4>
+
+            @foreach (var item in Model.TodoItems)
+            {
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <a href="~/Task/Details/@item.Id">@item.Title</a>
+                    </div>
+                    <div class="panel-body">
+                        <a href="~/Task/Details/@item.Id" style="float:right"><i class="fa fa-edit fa-fw"></i>View task</a>
+                        <label>Asignee</label>
+                        <p>@(item.Assignee != null ? item.Assignee.FullName : "Not asigned")</p>
+                        <label>Task type</label>
+                        <p>@item.TaskType.ToString()</p>
+                        <label>Story points</label>
+                        <p>@(item.StoryPoints ?? 0)</p>
+                        <label>Description</label>
+                        <p>@item.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-3 task-container">
+            <h4> In development </h4>
+
+            @foreach (var item in Model.InDevelopmentItems)
+            {
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <a href="~/Task/Details/@item.Id">@item.Title</a>
+                    </div>
+                    <div class="panel-body">
+                        <a href="~/Task/Details/@item.Id" style="float:right"><i class="fa fa-edit fa-fw"></i>View task</a>
+                        <label>Asignee</label>
+                        <p>@(item.Assignee != null ? item.Assignee.FullName : "Not asigned")</p>
+                        <label>Task type</label>
+                        <p>@item.TaskType.ToString()</p>
+                        <label>Story points</label>
+                        <p>@(item.StoryPoints ?? 0)</p>
+                        <label>Description</label>
+                        <p>@item.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-3 task-container">
+            <h4> In testing </h4>
+
+            @foreach (var item in Model.InTestingItems)
+            {
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <a href="~/Task/Details/@item.Id">@item.Title</a>
+                    </div>
+                    <div class="panel-body">
+                        <a href="~/Task/Details/@item.Id" style="float:right"><i class="fa fa-edit fa-fw"></i>View task</a>
+                        <label>Asignee</label>
+                        <p>@(item.Assignee != null ? item.Assignee.FullName : "Not asigned")</p>
+                        <label>Task type</label>
+                        <p>@item.TaskType.ToString()</p>
+                        <label>Story points</label>
+                        <p>@(item.StoryPoints ?? 0)</p>
+                        <label>Description</label>
+                        <p>@item.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-3">
+            <h4> Done </h4>
+
+            @foreach (var item in Model.DoneItems)
+            {
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <a href="~/Task/Details/@item.Id">@item.Title</a>
+                    </div>
+                    <div class="panel-body">
+                        <a href="~/Task/Details/@item.Id" style="float:right"><i class="fa fa-edit fa-fw"></i>View task</a>
+                        <label>Asignee</label>
+                        <p>@(item.Assignee != null ? item.Assignee.FullName : "Not asigned")</p>
+                        <label>Task type</label>
+                        <p>@item.TaskType.ToString()</p>
+                        <label>Story points</label>
+                        <p>@(item.StoryPoints ?? 0)</p>
+                        <label>Description</label>
+                        <p>@item.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h2>No active sprint !</h2>
+    }
+</div>

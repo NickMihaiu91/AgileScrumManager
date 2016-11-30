@@ -1,0 +1,189 @@
+﻿@model DomainClasses.Task
+
+@{
+    ViewBag.Title = "";
+}
+<script src="~/Scripts/plugins/angular.js/angular.js"></script>
+
+<h2 class="page-header">@Html.DisplayFor(model => model.Title)</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Task description
+                <a href="~/Task/Edit/@Model.Id" style="float:right; color:white"><i class="fa fa-edit fa-fw"></i>Edit task</a>
+            </div>
+
+            <div class="panel-body">
+                <label>
+                    @Html.DisplayNameFor(model => model.TaskPriority)
+                </label>
+                <p>
+                    @Html.DisplayFor(model => model.TaskPriority)
+                </p>
+
+                <label>
+                    @Html.DisplayNameFor(model => model.TaskStatus)
+                </label>
+                <p>
+                    @Html.DisplayFor(model => model.TaskStatus)
+                </p>
+
+                <label>
+                    @Html.DisplayNameFor(model => model.TaskType)
+                </label>
+                <p>
+                    @Html.DisplayFor(model => model.TaskType)
+                </p>
+
+                <label>
+                    @Html.DisplayNameFor(model => model.StoryPoints)
+                </label>
+                <p>
+                    @Html.DisplayFor(model => model.StoryPoints)
+                </p>
+
+                <label>
+                    @Html.DisplayNameFor(model => model.Description)
+                </label>
+                <p>
+                    @Html.DisplayFor(model => model.Description)
+                </p>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                Info
+                <a href="~/Task/AssignTask/@Model.Id" style="float: right; color: #428bca"><i class="fa fa-share fa-fw"></i>Assign to me</a>
+            </div>
+
+            <div class="panel-body">
+                <label>
+                    @Html.DisplayNameFor(model => model.Assignee)
+                </label>
+                <p>
+                    @(Model.Assignee != null ? Model.Assignee.Email : "Not assigned")
+                </p>
+
+                <label>
+                    @Html.DisplayNameFor(model => model.Reporter)
+                </label>
+                <p>
+                    @Html.DisplayFor(model => model.Reporter.Email)
+                </p>
+
+                <label>
+                    @Html.DisplayNameFor(model => model.CreatedAt)
+                </label>
+                <p>
+                    @Html.DisplayFor(model => model.CreatedAt)
+                </p>
+
+                <label>
+                    @Html.DisplayNameFor(model => model.EditedAt)
+                </label>
+                <p>
+                    @Html.DisplayFor(model => model.EditedAt)
+                </p>
+                <hr />
+
+                <label>
+                    @Html.DisplayNameFor(model => model.TotalWorkHours)
+                </label>
+                <p>
+                    @Html.DisplayFor(model => model.TotalWorkHours)
+                </p>
+                <p>
+                    <a href="~/Task/WorkLog/@Model.Id"><i class="fa fa-plus fa-fw"></i> Log work</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-app="commentApp">
+    <div class="col-md-6" ng-controller="CommentList">
+        <div class="chat-panel panel panel-default">
+            <div class="panel-heading">
+                <i class="fa fa-comments fa-fw"></i> Comments
+            </div>
+
+            <div class="panel-body">
+                <ul class="chat">
+
+                    <li ng-repeat="comm in comments">
+                        <div class="chat-body clearfix">
+                            <div class="header">
+                                <strong class="primary-font">{{ comm.PostedBy.Email }}</strong>
+                                <small class="pull-right text-muted">
+                                    <i class="fa fa-clock-o fa-fw"></i> {{ comm.PostedAt | date:'medium' }}
+                                </small>
+                            </div>
+                            <p>
+                                {{ comm.Content }}
+                            </p>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="panel-footer">
+                <div class="input-group">
+                    <textarea id="btn-input" class="form-control input-sm" style="min-width:300px; margin-bottom: 10px;" placeholder="Type your comment here..." ng-model="newCommValue"></textarea>
+
+                    <button class="btn btn-info " id="btn-chat" ng-click="addNewComment()">
+                        Add
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var commentApp = angular.module('commentApp', []);
+
+    commentApp.controller('CommentList', ['$scope', '$http',
+      function ($scope, $http) {
+
+          $scope.addNewComment = function () {
+
+              var newComm = {
+                  'Content': $scope.newCommValue,
+                  'PostedAt': new Date(),
+                  'PostedBy': {
+                      'Email' : '@Session["UserEmail"]'
+                  }
+              };
+
+              $scope.comments.unshift(newComm);
+
+              var message = {
+                  'value': $scope.newCommValue,
+                  'userId' : @Session["UserId"]
+                  };
+
+              $scope.newCommValue = "";
+
+              $http({
+                  method: 'POST',
+                  url: '../../api/comment/@Model.Id',
+                  data: JSON.stringify(message),
+                  headers: { 'Content-Type': 'application/json' }
+              });
+
+          }
+
+          $http.get('../../api/comment/@Model.Id').success(function (data) {
+              $scope.comments = data;
+          });
+      }]);
+
+</script>

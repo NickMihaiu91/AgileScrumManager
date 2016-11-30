@@ -1,0 +1,55 @@
+﻿
+
+<link href="~/Content/morris/morris-0.4.3.min.css" rel="stylesheet" />
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Sprint velocity history
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <div id="morris-line-chart" style="position: relative;">
+            
+        </div>
+    </div>
+    <!-- /.panel-body -->
+</div>
+
+<script src="~/Scripts/plugins/morris/morris.js"></script>
+<script src="~/Scripts/plugins/morris/raphael-2.1.0.min.js"></script>
+
+<script type="text/javascript">
+
+    Morris.Line({
+        element: 'morris-line-chart',
+        data: [{
+            y: '2014-01',
+            a: 45
+        }, {
+            y: '2014-02',
+            a: 55
+        }, {
+            y: '2014-03',
+            a: 39,
+        }, {
+            y: '2014-04',
+            a: 48
+        }, {
+            y: '2014-05',
+            a: 47
+        }, {
+            y: '2014-06',
+            a: 45
+        }, {
+            y: '2014-07',
+            a: 56
+        }],
+        xkey: 'y',
+        ykeys: ['a'],
+        labels: ['Velocity'],
+        hideHover: 'auto',
+        resize: true,
+    });
+
+</script>

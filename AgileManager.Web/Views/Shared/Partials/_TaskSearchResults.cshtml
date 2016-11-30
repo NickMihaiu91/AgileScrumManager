@@ -1,0 +1,56 @@
+﻿@model IEnumerable<DomainClasses.Task>
+
+@if (Model.Count() > 0)
+{
+    <h2>Search results</h2>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskPriority)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskStatus)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskPriority)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskStatus)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Task", new { id = item.Id }, new {}) |
+                    @Html.ActionLink("View", "Details", "Task", new { id = item.Id }, new { })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+

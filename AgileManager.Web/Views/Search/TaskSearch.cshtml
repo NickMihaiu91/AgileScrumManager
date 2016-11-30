@@ -1,0 +1,65 @@
+﻿@model AgileManager.Web.Models.TaskSearchModel
+
+@{
+    ViewBag.Title = "Search for task";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SearchModel.Title, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.SearchModel.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SearchModel.Title)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SearchModel.TaskType, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SearchModel.TaskType, Model.SearchModel.TaskType.ToSelectList(), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SearchModel.TaskType)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SearchModel.TaskStatus, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SearchModel.TaskStatus, Model.SearchModel.TaskStatus.ToSelectList(), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SearchModel.TaskStatus)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SearchModel.TaskPriority, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SearchModel.TaskPriority, Model.SearchModel.TaskPriority.ToSelectList(), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SearchModel.TaskPriority)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Search" class="btn btn-default btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    @if (@Model.DisplayNoResultsMessage)
+    {
+        <h3 style="text-align:center">No tasks found !</h3>
+    }
+    else
+    {
+        @Html.Partial("Partials/_TaskSearchResults", @Model.Results)
+    }
+    
+</div>
+
