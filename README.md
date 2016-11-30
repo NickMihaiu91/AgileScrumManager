@@ -10,6 +10,8 @@ Built this in 2014 for my Bachelor's thesis in Computer Science
 
 ![Sprint cycle](readme-images/sprint-cycle.png?raw=true "Sprint cycle")
 
+</br>
+
 ##Web app architecture
 ![Architecture](readme-images/architecture-diagram.jpg?raw=true "Architecture")
 
@@ -64,4 +66,31 @@ Built this in 2014 for my Bachelor's thesis in Computer Science
   - Create and assign teams
   - Assign Product Owners and Team leaders
 
-##Features
+##Screenshots
+###Admin send invite 
+![Admin invite](readme-images/screnshots/send-invite.JPG?raw=true "Admin invite")
+</br>
+###Email invite
+![Email invite](readme-images/screnshots/email-invite.JPG?raw=true "Email invite")
+</br>
+###User registration 
+![User registration](readme-images/screnshots/user-registration.JPG?raw=true "User registration")
+</br>
+###Team member Dashboard
+![Team member Dashboard](readme-images/screnshots/user-dashboard.JPG?raw=true "Team member Dashboard")
+</br>
+###Product Owner Dashboard
+![Product Owner Dashboard](readme-images/screnshots/po-dashboard?raw=true "Product Owner Dashboard")
+</br>
+###Backlog
+![Backlog](readme-images/screnshots/backlog-with-epics.JPG?raw=true "Backlog")
+</br>
+###Sprint view
+![Sprint view](readme-images/screnshots/sprint-view.JPG?raw=true "Sprint view")
+</br>
+###View task details
+![View task details](readme-images/screnshots/task-details.JPG?raw=true "View task details")
+</br>
+###Create new task
+![Create new task](readme-images/screnshots/add-new-task.JPG?raw=true "Create new task")
+</br>
